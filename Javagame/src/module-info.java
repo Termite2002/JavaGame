@@ -1,3 +1,3 @@
-module WanderingHero1 {
+module WanderingHero0 {
 	requires java.desktop;
 }

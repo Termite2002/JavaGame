@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable {											// kế thừa class JPanel
+public class GamePanel extends JPanel implements Runnable {						// kế thừa class JPanel
 	// SCREEN SETTINGS
     final int originalTitleSize = 16;											// 16 x 16
-    final int scale = 4;
+    final int scale = 3;
     
     final int titleSize = originalTitleSize * scale;							// 48 x 48
     final int maxScreenCol = 16;
@@ -37,3 +37,4 @@ public class GamePanel extends JPanel implements Runnable {											// kế th
 		}
 	}
 }
+
