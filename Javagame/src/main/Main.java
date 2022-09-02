@@ -8,7 +8,7 @@ public class Main {
         JFrame window = new JFrame();                                           // tạo frame
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                  // đóng cửa số 
         window.setResizable(false);                                             // cửa sổ không thay đổi kích thước
-        window.setTitle("WanderingHero");                                       // tên cửa sổ
+        window.setTitle("WanderingNinja");                                       // tên cửa sổ
         
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
