@@ -21,13 +21,20 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     public final int screenWidth = titleSize * maxScreenCol; 							// chiều ngang cửa sổ window
     public final int screenHeight = titleSize * maxScreenRow;							// chiều dọc cửa sổ window
     
+    // WORLD SETTING
+    public final int maxWorldCol = 22;
+    public final int maxWorldRow = 15;
+    public final int worldWidth = maxWorldCol * titleSize;
+    public final int worldHeight = maxWorldRow * titleSize;
+    
     // FPS
     int FPS = 60;
     
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public Player player = new Player(this, keyH);
     
     
     
