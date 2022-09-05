@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {						// kế thừa class JPanel
@@ -16,14 +17,14 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     final int scale = 3;
     
     public final int titleSize = originalTitleSize * scale;							// 48 x 48
-    public final int maxScreenCol = 22;
-    public final int maxScreenRow = 15;
+    public final int maxScreenCol = 20;
+    public final int maxScreenRow = 14;
     public final int screenWidth = titleSize * maxScreenCol; 							// chiều ngang cửa sổ window
     public final int screenHeight = titleSize * maxScreenRow;							// chiều dọc cửa sổ window
     
     // WORLD SETTING
-    public final int maxWorldCol = 22;
-    public final int maxWorldRow = 15;
+    public int maxWorldCol = 50;
+    public int maxWorldRow = 50;
     public final int worldWidth = maxWorldCol * titleSize;
     public final int worldHeight = maxWorldRow * titleSize;
     
@@ -34,8 +35,9 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    
+    public SuperObject obj[] = new SuperObject[10];
     
     
     public GamePanel() {
@@ -44,6 +46,10 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
         this.setDoubleBuffered(true);											// Để true, mọi hoạt ảnh của thành phần này đều được hoàn thành trong bộ đệm chạy ngầm
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+    
+    public void setupGame() {
+    	aSetter.setObject();
     }
     
     public void startGameThread() {
@@ -90,7 +96,16 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
 		super.paintComponent(g);												// super dùng để gọi method của class JPanel(superclass) mà GamePanel(subclass) kế thừa. paintComponent, phương thức này được override từ lớp JPanel		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		// TILE
 		tileM.draw(g2);
+		
+		// OBJECT
+		for(int i = 0; i < obj.length; i++) {
+			if (obj[i] != null)
+				obj[i].draw(g2, this);
+		}
+		
+		// PLAYER
 		player.draw(g2);
 		
 		

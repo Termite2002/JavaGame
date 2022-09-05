@@ -18,6 +18,7 @@ public class Main {
         window.setLocationRelativeTo(null);                                     // để cửa sổ xuất hiện giữa màn hình
         window.setVisible(true);                                                // cửa sổ nhìn được    
 		
+        gamePanel.setupGame();
         gamePanel.startGameThread();
 	}
 }
