@@ -24,7 +24,7 @@ public class TileManager {
 	public TileManager(GamePanel gp) {
 		
 		this.gp = gp;
-//		System.out.println("bd");
+
 		InputStream is = getClass().getResourceAsStream("/mapdata/tidedata.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		
@@ -39,7 +39,7 @@ public class TileManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("kt");
+
 		tile = new Tile[fileNames.size()];
 		getTileImage();
 		
@@ -110,9 +110,9 @@ public class TileManager {
 				
 				while(col < gp.maxWorldCol) {
 					
-					String numbers[] = line.split(" ");
+					String numbers[] = line.split(" ");										// tách chuỗi
 					
-					int num = Integer.parseInt(numbers[col]);
+					int num = Integer.parseInt(numbers[col]);								// int to string
 					
 					mapTileNum[col][row] = num;
 					col++;
@@ -145,10 +145,32 @@ public class TileManager {
 			int screenX = worldX - gp.player.worldX + gp.player.screenX;
 			int screenY = worldY - gp.player.worldY + gp.player.screenY;
 			
+			// Stop moving the camera at the edge
+			if(gp.player.screenX > gp.player.worldX) {
+				screenX = worldX;
+			}
+			if(gp.player.screenY > gp.player.worldY) {
+				screenY = worldY;
+			}
+			int rightOffset = gp.screenWidth - gp.player.screenX;
+			if(rightOffset > gp.worldWidth - gp.player.worldX) {
+				screenX = gp.screenWidth - (gp.worldWidth - worldX);
+			}
+			int bottomOffset = gp.screenHeight - gp.player.screenY;
+			if(bottomOffset > gp.worldHeight - gp.player.worldY) {
+				screenY = gp.screenHeight - (gp.worldHeight - worldY);
+			}
+			
 			if(worldX + gp.titleSize > gp.player.worldX - gp.player.screenX &&
 			   worldX - gp.titleSize < gp.player.worldX + gp.player.screenX &&
 			   worldY + gp.titleSize > gp.player.worldY - gp.player.screenY &&
 			   worldY - gp.titleSize < gp.player.worldY + gp.player.screenY) {
+				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+			}
+			else if(gp.player.screenX > gp.player.worldX ||
+					gp.player.screenY > gp.player.worldY ||
+					rightOffset > gp.worldWidth - gp.player.worldX ||
+					bottomOffset > gp.worldHeight - gp.player.worldY) {
 				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.titleSize, gp.titleSize, null);
 			}
 			worldCol++;	

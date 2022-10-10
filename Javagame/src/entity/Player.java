@@ -13,16 +13,19 @@ import main.KeyHandler;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
+
 	KeyHandler keyH;
 	
 	public final int screenX;
 	public final int screenY;
-	int hasKey = 0;
+//	public int hasKey = 0;
 	
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
+		
+		super(gp);														// Gọi superclass(Entity) và pass gp;
+		
+
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth/2 - (gp.titleSize/2);
@@ -44,29 +47,25 @@ public class Player extends Entity{
 		direction = "down";
 	}
 	public void getPlayerImage() {
-
-		try {
-			up0 = ImageIO.read(getClass().getResourceAsStream("/nin/up0.png"));
-			up1 = ImageIO.read(getClass().getResourceAsStream("/nin/up1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/nin/up2.png"));
-			up3 = ImageIO.read(getClass().getResourceAsStream("/nin/up3.png"));
-			down0 = ImageIO.read(getClass().getResourceAsStream("/nin/down0.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/nin/down1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/nin/down2.png"));
-			down3 = ImageIO.read(getClass().getResourceAsStream("/nin/down3.png"));
-			left0 = ImageIO.read(getClass().getResourceAsStream("/nin/left0.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/nin/left1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/nin/left2.png"));
-			left3 = ImageIO.read(getClass().getResourceAsStream("/nin/left3.png"));
-			right0 = ImageIO.read(getClass().getResourceAsStream("/nin/right0.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/nin/right1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/nin/right2.png"));
-			right3 = ImageIO.read(getClass().getResourceAsStream("/nin/right3.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	
-
+			
+			ava = setup("/nin/Playerava");
+			up0 = setup("/nin/up0");
+			up1 = setup("/nin/up1");
+			up2 = setup("/nin/up2");
+			up3 = setup("/nin/up3");
+			down0 = setup("/nin/down0");
+			down1 = setup("/nin/down1");
+			down2 = setup("/nin/down2");
+			down3 = setup("/nin/down3");
+			left0 = setup("/nin/left0");
+			left1 = setup("/nin/left1");
+			left2 = setup("/nin/left2");
+			left3 = setup("/nin/left3");
+			right0 = setup("/nin/right0");
+			right1 = setup("/nin/right1");
+			right2 = setup("/nin/right2");
+			right3 = setup("/nin/right3");
+		
 	}
 	public void update() {
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
@@ -90,6 +89,11 @@ public class Player extends Entity{
 			// CHECK OBJECT COLLISION
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
+			
+			// CHECK NPC COLLISION
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
+			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
 				switch(direction) {
@@ -99,7 +103,6 @@ public class Player extends Entity{
 				case "right": worldX += speed; break;
 				}
 			}
-			
 			
 			spriteCounter++;
 			if(spriteCounter > 12) {
@@ -119,36 +122,57 @@ public class Player extends Entity{
 	public void pickUpObject(int i) {
 		if (i != 999) {
 			
-			String objectName = gp.obj[i].name;
-			
-			switch(objectName) {
-			case "key":
-				gp.playSE(1);
-				hasKey++;
-				gp.obj[i] = null;
-				break;
-			case "door":
-				if(hasKey > 0) {
-					gp.playSE(2);
-					gp.obj[i] = null;
-					hasKey--;
-				}
-			case "chest":
-				gp.playSE(5);
-				gp.obj[i] = null;
-				break;
-			case "boot":
-				gp.playSE(3);
-				gp.obj[i] = null;
-				break;
-			}
-			
-			
+//			String objectName = gp.obj[i].name;
+//			
+//			switch(objectName) {
+//			case "key":
+//				gp.playSE(1);
+//				hasKey++;
+//				gp.obj[i] = null;
+//				gp.ui.showMessage("You got a key!");
+//				break;
+//			case "door":
+//				if(hasKey > 0) {
+//					gp.playSE(2);
+//					gp.obj[i] = null;
+//					hasKey--;
+//					gp.ui.showMessage("You opened the door!");
+//				}
+//				else {
+//					gp.ui.showMessage("You need a key!");
+//				}
+//				break;
+//			case "chest":
+//				gp.stopMusic();
+//				gp.playSE(5);
+//				gp.obj[i] = null;
+//				gp.ui.showMessage("You found the treasure!");
+//				break;
+//			case "boot":
+//				speed += 1;
+//				gp.playSE(3);
+//				gp.obj[i] = null;
+//				gp.ui.showMessage("Speed up!");
+//				break;
+//			}
+//			
+//			
 		}
 	}
+	
+	public void interactNPC(int i) {
+		
+		if(i != 999) {
+			
+			if(gp.keyH.enterPressed == true) {
+				gp.gameState = gp.dialogueState;
+				gp.npc[i].speak();
+			}
+		}
+		gp.keyH.enterPressed = false;
+	}
 	public void draw(Graphics2D g2) {
-//		g2.setColor(Color.white);
-//		g2.fillRect(x, y, gp.titleSize, gp.titleSize);
+
 		
 		BufferedImage image = null;
 		
@@ -210,7 +234,27 @@ public class Player extends Entity{
 			}
 			break;
 		}
-		g2.drawImage(image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+		
+		int x = screenX;
+		int y = screenY;
+		
+		if(screenX > worldX) {
+			x = worldX;
+		}
+		if(screenY > worldY) {
+			y = worldY;
+		}
+		int rightOffset = gp.screenWidth - screenX;
+		if(rightOffset > gp.worldWidth - worldX) {
+			x = gp.screenWidth - (gp.worldWidth - worldX);
+		}
+		int bottomOffset = gp.screenHeight - screenY;
+		if(bottomOffset > gp.worldHeight - worldY) {
+			y = gp.screenHeight - (gp.worldHeight - worldY);
+		}
+		
+		
+		g2.drawImage(image, x, y, gp.titleSize, gp.titleSize, null);
 	}
 	
 }
