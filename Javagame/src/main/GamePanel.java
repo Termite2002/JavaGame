@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -40,12 +44,16 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
     Thread gameThread;
     
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public Entity npc[] = new Entity[10];
-    public SuperObject obj[] = new SuperObject[10];
+    public boolean appearAvatar = false;
+    public Entity obj[] = new Entity[10];
+    public Entity monster[] = new Entity[20];
+    ArrayList<Entity> entityList = new ArrayList<>();
     
     // GAME STATE
     public int gameState;
@@ -65,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     public void setupGame() {
     	aSetter.setObject();
     	aSetter.setNPC();
+    	aSetter.setMonster();
 //    	playMusic(0);
     	gameState = titleState;
     }
@@ -117,6 +126,11 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
 					npc[i].update();
 				}
 			}
+			for(int i = 0; i < monster.length; i++) {
+				if(monster[i] != null) {
+					monster[i].update();
+				}
+			}
 		}
 		if(gameState == pauseState) {
 			// nope
@@ -128,29 +142,67 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
 		
 		// TITLE SCREEN
 		if(gameState == titleState) {
-			ui.draw(g2);
+			ui.draw(g2,false);
 		}
 		// OTHERS
 		else {
 			// TILE
 			tileM.draw(g2);
 			
-			// OBJECT
-			for(int i = 0; i < obj.length; i++) {
-				if(obj[i] != null)
-					obj[i].draw(g2, this);
-			}
+			// ADD ENTITIES TO THE LIST
+			entityList.add(player);
 			
-			// NPC
 			for(int i = 0; i < npc.length; i++) {
 				if(npc[i] != null) {
-					npc[i].draw(g2);
+					entityList.add(npc[i]);
 				}
 			}
 			
+			for(int i = 0; i < obj.length; i++) {
+				if(obj[i] != null) {
+					entityList.add(obj[i]);
+				}
+			}
+			for(int i = 0; i < monster.length; i++) {
+				if(monster[i] != null) {
+					entityList.add(monster[i]);
+				}
+			}
+			
+			// Sort entities
+			Collections.sort(entityList, new Comparator<Entity>() {
+
+				@Override
+				public int compare(Entity e1, Entity e2) {
+					
+					int result = Integer.compare(e1.worldY, e2.worldY);
+					return result;
+				}
+				
+			});
+			
+			// Draw entities
+			for(int i = 0; i < entityList.size(); i++) {
+				entityList.get(i).draw(g2);
+			}
+			entityList.clear();
+			
+//			// OBJECT
+//			for(int i = 0; i < obj.length; i++) {
+//				if(obj[i] != null)
+//					obj[i].draw(g2, this);
+//			}
+//			
+//			// NPC
+//			for(int i = 0; i < npc.length; i++) {
+//				if(npc[i] != null) {
+//					npc[i].draw(g2);
+//				}
+//			}
+			
 			// PLAYER
-			player.draw(g2);
-			ui.draw(g2);
+//			player.draw(g2);
+			ui.draw(g2, appearAvatar);
 		}
 		
 

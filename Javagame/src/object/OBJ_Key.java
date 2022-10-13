@@ -4,13 +4,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Key extends SuperObject{
-	public OBJ_Key() {
+import entity.Entity;
+import main.GamePanel;
+
+public class OBJ_Key extends Entity{
+	
+	
+	public OBJ_Key(GamePanel gp) {
+		super(gp);
 		name = "key";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/SilverKey.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		down0 = setup("/objects/SilverKey");
+
 	}
 }

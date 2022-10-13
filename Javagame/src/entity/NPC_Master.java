@@ -18,6 +18,13 @@ public class NPC_Master extends Entity{
 		direction = "down";
 		speed = 1;
 		
+		solidArea.x = 0;
+		solidArea.y = 16;
+		solidArea.width = 48;
+		solidArea.height = 32;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		
 		getImage();
 		setDialogue();
 	}

@@ -1,6 +1,8 @@
 package entity;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -45,6 +47,10 @@ public class Player extends Entity{
 		worldY = 25*gp.titleSize;
 		speed = 4;
 		direction = "down";
+		
+		// PLAYER STATUS
+		maxLife = 12;
+		life = maxLife;
 	}
 	public void getPlayerImage() {
 			
@@ -94,6 +100,13 @@ public class Player extends Entity{
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
 			
+			// CHECK MONSTER COLLISION
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			contactMonster(monsterIndex);
+			// CHECK EVENT
+			gp.eHandler.checkEvent();
+			gp.keyH.enterPressed = false;
+			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
 				switch(direction) {
@@ -116,7 +129,13 @@ public class Player extends Entity{
 		else {
 			spriteNum = 0;
 		}
-		
+		if(invinsible == true) {
+			invinsibleCounter++;
+			if(invinsibleCounter > 35) {
+				invinsible = false;
+				invinsibleCounter = 0;
+			}
+		}
 
 	}
 	public void pickUpObject(int i) {
@@ -165,11 +184,22 @@ public class Player extends Entity{
 		if(i != 999) {
 			
 			if(gp.keyH.enterPressed == true) {
+				gp.appearAvatar = true;
 				gp.gameState = gp.dialogueState;
 				gp.npc[i].speak();
 			}
 		}
-		gp.keyH.enterPressed = false;
+	}
+	public void contactMonster(int i) {
+		
+		if(i != 999) {
+			
+			if(invinsible == false) {
+				life -= 1;
+				invinsible = true;
+			}
+			
+		}
 	}
 	public void draw(Graphics2D g2) {
 
@@ -253,8 +283,18 @@ public class Player extends Entity{
 			y = gp.screenHeight - (gp.worldHeight - worldY);
 		}
 		
-		
+		if(invinsible == true) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.65f));
+		}
 		g2.drawImage(image, x, y, gp.titleSize, gp.titleSize, null);
+		
+		// Reset alpha
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+		// Debug
+//		g2.setFont(new Font("Arial", Font.PLAIN, 26));
+//		g2.setColor(Color.white);
+//		g2.drawString("Invin: " + invinsibleCounter, 10,400);
 	}
 	
 }

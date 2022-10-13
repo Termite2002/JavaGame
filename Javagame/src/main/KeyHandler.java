@@ -37,7 +37,7 @@ public class KeyHandler implements KeyListener {											// Kế thừa interf
 			if(code == KeyEvent.VK_ENTER) {
 				if(gp.ui.commandNum == 0) {
 					gp.gameState = gp.playState;
-					gp.playMusic(0);
+//					gp.playMusic(0);
 				}
 				if(gp.ui.commandNum == 1) {
 					// add later
@@ -83,6 +83,7 @@ public class KeyHandler implements KeyListener {											// Kế thừa interf
 		else if(gp.gameState == gp.dialogueState) {
 			if(code == KeyEvent.VK_ENTER) {
 				gp.gameState = gp.playState;
+				gp.appearAvatar = false;
 			}
 		}
 		

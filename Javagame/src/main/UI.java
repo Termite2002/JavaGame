@@ -11,7 +11,9 @@ import java.io.InputStream;
 
 import entity.Entity;
 import entity.NPC_Master;
+import object.OBJ_Heart;
 import object.OBJ_Key;
+import object.SuperObject;
 
 public class UI {
 	
@@ -22,7 +24,7 @@ public class UI {
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
-	BufferedImage face_Master;
+	BufferedImage face_Master, heart_full, heart_34, heart_half, heart_14, heart_empty;
 	
 	public String currentDialogue = "";
 	public int commandNum = 0;
@@ -44,6 +46,14 @@ public class UI {
 			e.printStackTrace();
 		}
 		
+		// CREATE HUD OBJECT
+		Entity heart = new OBJ_Heart(gp);
+		heart_full = heart.image;
+		heart_34 = heart.image2;
+		heart_half = heart.image3;
+		heart_14 = heart.image4;
+		heart_empty = heart.image5;
+		
 		// Get face
 		NPC_Master master = new NPC_Master(gp);
 		face_Master = master.ava;
@@ -54,7 +64,7 @@ public class UI {
 		message = text;
 		messageOn = true;
 	}
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2, boolean appearAvatar) {
 		
 		this.g2 = g2;
 		
@@ -68,16 +78,18 @@ public class UI {
 		
 		// PLAY STATE
 		if(gp.gameState == gp.playState) {
-			// nope
+			drawPlayerLife();
 		}
 		// PAUSE STATE
 		if(gp.gameState == gp.pauseState) {
+			drawPlayerLife();
 			drawPauseScreen();
 		}
 		// DIALOGUE STATE
 		if(gp.gameState == gp.dialogueState) {
+			drawPlayerLife();
 			drawDialogueScreen();
-			g2.drawImage(face_Master, gp.titleSize + 60, gp.titleSize, 60, 60, null);
+			if(appearAvatar == true) g2.drawImage(face_Master, gp.titleSize + 60, gp.titleSize, 60, 60, null);
 		}
 		
 //		g2.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -98,6 +110,47 @@ public class UI {
 //			}
 //		}
 	}
+	
+	public void drawPlayerLife() {
+		
+//		gp.player.life = 7;
+		
+		int x = gp.titleSize/2;
+		int y = gp.titleSize/2;
+		int i = 0;
+		
+		// DRAW MAX HEART
+		while(i < gp.player.maxLife/4) {
+			g2.drawImage(heart_empty, x, y, gp.titleSize-5, gp.titleSize-5 ,null);
+			i++;
+			x += gp.titleSize;
+		}
+		
+		// RESET
+		x = gp.titleSize/2;
+		y = gp.titleSize/2;
+		i = 0;
+		
+		// DRAW CURRENT LIFE
+		while(i < gp.player.life) {
+			g2.drawImage(heart_14, x, y, gp.titleSize-5, gp.titleSize-5 ,null);
+			i++;
+			if(i < gp.player.life) {
+				g2.drawImage(heart_half, x, y,gp.titleSize-5, gp.titleSize-5 , null);
+			}
+			i++;
+			if(i < gp.player.life) {
+				g2.drawImage(heart_34, x, y,gp.titleSize-5, gp.titleSize-5 , null);
+			}
+			i++;
+			if(i < gp.player.life) {
+				g2.drawImage(heart_full, x, y,gp.titleSize-5, gp.titleSize-5 , null);
+			}
+			i++;
+			x += gp.titleSize;
+		}
+	}
+	
 	public void drawTitleScreen() {
 		
 		Color title_c = new Color(200,150,107);

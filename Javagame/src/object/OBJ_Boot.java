@@ -4,13 +4,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Boot extends SuperObject{
-	public OBJ_Boot() {
+import entity.Entity;
+import main.GamePanel;
+
+public class OBJ_Boot extends Entity{
+	public OBJ_Boot(GamePanel gp) {
+		super(gp);
 		name = "boot";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/normalboot.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		down0 = setup("/objects/normalboot");
 	}
 }

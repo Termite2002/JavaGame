@@ -4,14 +4,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Chest extends SuperObject{
-	public OBJ_Chest() {
+import entity.Entity;
+import main.GamePanel;
+
+public class OBJ_Chest extends Entity{
+	public OBJ_Chest(GamePanel gp) {
+		super(gp);
 		name = "chest";
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/treasure.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		down0 = setup("/objects/treasure");
+
 	}
 
 }
