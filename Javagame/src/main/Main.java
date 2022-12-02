@@ -3,9 +3,12 @@ package main;
 import javax.swing.JFrame;
 
 public class Main {
+	
+	public static JFrame window; 
+	
 	public static void main(String[] args) {
 		
-        JFrame window = new JFrame();                                           // tạo frame
+        window = new JFrame();                                           // tạo frame
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                  // đóng cửa số 
         window.setResizable(false);                                             // cửa sổ không thay đổi kích thước
         window.setTitle("WanderingNinja");                                       // tên cửa sổ

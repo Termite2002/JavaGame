@@ -17,7 +17,7 @@ public class TileManager {
 
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[][];
+	public int mapTileNum[][][];
 	ArrayList<String> fileNames = new  ArrayList<>();
 	ArrayList<String> collisionStatus = new  ArrayList<>();
 	
@@ -25,7 +25,7 @@ public class TileManager {
 		
 		this.gp = gp;
 
-		InputStream is = getClass().getResourceAsStream("/mapdata/tidedata.txt");
+		InputStream is = getClass().getResourceAsStream("/mapdata/tiledatabeg.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		
 		String line;
@@ -50,13 +50,14 @@ public class TileManager {
 //			String maxTile[] = line2.split(" ");
 //			gp.maxWorldCol = maxTile.length;
 //			gp.maxWorldRow = maxTile.length;
-			mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+			mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 //		}catch(IOException e) {
 //			System.out.println("E");
 //		}
 		
 		
-		loadMap("/maps/map101.txt");
+		loadMap("/maps/mapbeg.txt", 0);
+		loadMap("/maps/dungeon0.txt", 1);
 	}
 	
 	public void getTileImage() {
@@ -87,14 +88,14 @@ public class TileManager {
 		try {
 			
 			tile[index] = new Tile();
-			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName));
+			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/beg/" + imageName));
 			tile[index].collision = collision;
 			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public void loadMap(String filePath) {
+	public void loadMap(String filePath, int map) {
 				
 		try {
 			
@@ -114,7 +115,7 @@ public class TileManager {
 					
 					int num = Integer.parseInt(numbers[col]);								// int to string
 					
-					mapTileNum[col][row] = num;
+					mapTileNum[map][col][row] = num;
 					col++;
 				}
 				if(col == gp.maxWorldCol) {
@@ -138,7 +139,7 @@ public class TileManager {
 		
 		while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 			
-			int tileNum = mapTileNum[worldCol][worldRow];
+			int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow];
 			
 			int worldX = worldCol * gp.titleSize;	
 			int worldY = worldRow * gp.titleSize;

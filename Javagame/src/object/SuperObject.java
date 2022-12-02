@@ -50,7 +50,7 @@ public class SuperObject {
 		    gp.player.worldY < gp.player.screenY ||
 		    rightOffset > gp.worldWidth - gp.player.worldX ||
 		    bottomOffset > gp.worldHeight - gp.player.worldY) {
-		   g2.drawImage(image, screenX, screenY, gp.titleSize-sizeX, gp.titleSize-sizeY, null); 
+		   g2.drawImage(image, 2*screenX, 2*screenY, gp.titleSize-sizeX, gp.titleSize-sizeY, null); 
 		  }  
 	}
 }
