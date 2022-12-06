@@ -60,7 +60,8 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		worldX = 5*gp.titleSize;
 		worldY = 44*gp.titleSize;
-		speed = 4;
+		defaultSpeed = 4;
+		speed = defaultSpeed;
 		direction = "down";
 		
 		// PLAYER STATUS
@@ -87,13 +88,14 @@ public class Player extends Entity{
 	public void restoreLifeandMana() {
 		life = maxLife;
 		invinsible = false;
+		speed = defaultSpeed;
+		attacking = false;
 	}
 	public void setItems() {
 		
 		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
-		inventory.add(new OBJ_Key(gp));
 
 	}
 	public int getAttack() {
@@ -131,14 +133,22 @@ public class Player extends Entity{
 	}
 	public void getPlayerAttack() {
 		
-		attackUp = setup("/nin/nin_atk_up");
-		attackDown = setup("/nin/nin_atk_down");
-		attackLeft = setup("/nin/nin_atk_left");
-		attackRight = setup("/nin/nin_atk_right");
-		attackUp = UtilityTool.scaleImage(attackUp, gp.titleSize, gp.titleSize*2);
-		attackDown = UtilityTool.scaleImage(attackDown, gp.titleSize, gp.titleSize*2);
-		attackLeft = UtilityTool.scaleImage(attackLeft, gp.titleSize*2, gp.titleSize);
-		attackRight = UtilityTool.scaleImage(attackRight, gp.titleSize*2, gp.titleSize);
+		attackUp1 = setup("/nin/nin_atk_up");
+		attackUp2 = setup("/nin/nin_atk_up");
+		attackDown1 = setup("/nin/nin_atk_down");
+		attackDown2 = setup("/nin/nin_atk_down");
+		attackLeft1 = setup("/nin/nin_atk_left");
+		attackLeft2 = setup("/nin/nin_atk_left");
+		attackRight1 = setup("/nin/nin_atk_right");
+		attackRight2 = setup("/nin/nin_atk_right");
+		attackUp1 = UtilityTool.scaleImage(attackUp1, gp.titleSize, gp.titleSize*2);
+		attackDown1 = UtilityTool.scaleImage(attackDown1, gp.titleSize, gp.titleSize*2);
+		attackLeft1 = UtilityTool.scaleImage(attackLeft1, gp.titleSize*2, gp.titleSize);
+		attackRight1 = UtilityTool.scaleImage(attackRight1, gp.titleSize*2, gp.titleSize);
+		attackUp2 = UtilityTool.scaleImage(attackUp2, gp.titleSize, gp.titleSize*2);
+		attackDown2 = UtilityTool.scaleImage(attackDown2, gp.titleSize, gp.titleSize*2);
+		attackLeft2 = UtilityTool.scaleImage(attackLeft2, gp.titleSize*2, gp.titleSize);
+		attackRight2 = UtilityTool.scaleImage(attackRight2, gp.titleSize*2, gp.titleSize);
 		
 	}
 	public void update() {
@@ -231,52 +241,7 @@ public class Player extends Entity{
 		}
 
 	}
-	public void attacking() {
-		
-		spriteCounter++;
-		
-		if(spriteCounter <= 5) {
-			spriteNum = 1;
-		}
-		if(spriteCounter > 5 && spriteCounter <= 25) {
-			spriteNum = 2;
-			
-			// Save the current worldX, worldY, solidArea
-			int currentWorldX = worldX;
-			int currentWorldY = worldY;
-			int solidAreaWidth = solidArea.width;
-			int solidAreaHeight = solidArea.height;
-			
-			// Adjust player's worldX/Y for the attackArea
-			switch(direction) {
-			case "up": worldY -= attackArea.height; break;
-			case "down": worldY += attackArea.height; break;
-			case "left": worldX -= attackArea.width; break;
-			case "right": worldX += attackArea.width; break;
-			}
-			// attackArea becomes sollidArea
-			solidArea.width = attackArea.width;
-			solidArea.height = attackArea.height;
-			// Check monster collision
-			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-			damageMonster(monsterIndex);
-			
-			
-			worldX = currentWorldX;
-			worldY = currentWorldY;
-			solidArea.width = solidAreaWidth;
-			solidArea.width = solidAreaHeight;
-			
-			
-			
-			
-		}
-		if(spriteCounter > 25) {
-			spriteNum = 1;
-			spriteCounter = 0;
-			attacking = false;
-		}
-	}
+
 	public void pickUpObject(int i) {
 		if (i != 999) {
 			
@@ -413,11 +378,15 @@ public class Player extends Entity{
 			
 		}
 	}
-	public void damageMonster(int i) {
+	public void damageMonster(int i,Entity attacker, int knockBackPower) {
 		if(i != 999) {
 			
 			if(gp.monster[gp.currentMap][i].invinsible == false) {
 				gp.playSE(9);
+				
+				if(knockBackPower > 0) {
+					setKnockBack(gp.monster[gp.currentMap][i], attacker,knockBackPower);
+				}
 				
 				int damage = attack - gp.monster[gp.currentMap][i].defense;
 				if(damage < 0) {
@@ -442,6 +411,7 @@ public class Player extends Entity{
 			System.out.println("Miss");
 		}
 	}
+
 	public void checkLevelUp() {
 		if(exp >= nextLevelExp) {
 			level++;
@@ -480,7 +450,7 @@ public class Player extends Entity{
 				currentWeapon = selectedItem;
 				attack = getAttack();
 			}
-			if(selectedItem.type == type_woodenshield || selectedItem.type == type_ironshield) {
+			if(selectedItem.type == type_woodenshield || selectedItem.type == type_ironshield || selectedItem.type == type_blueshield) {
 				currentShield = selectedItem;
 				defense = getDefense();
 			}
@@ -546,7 +516,7 @@ public class Player extends Entity{
 		
 		switch(direction) {
 		case "up":
-			if(attacking == false ) {
+			if(attacking == false) {
 				if(spriteNum == 1) {image = up1;}
 				if(spriteNum == 2) {image = up2;}
 				if(spriteNum == 0) {image = up0;}
@@ -554,8 +524,8 @@ public class Player extends Entity{
 			}
 			if(attacking == true) {
 				mod_img_up = true;
-				if(spriteNum == 1) {image = attackUp;}
-				if(spriteNum == 2) {image = attackUp;}
+				if(spriteNum == 1) {image = attackUp1;}
+				if(spriteNum == 2) {image = attackUp2;}
 			}
 			break;
 		case "down":
@@ -566,8 +536,8 @@ public class Player extends Entity{
 				if(spriteNum == 3) {image = down3;}
 			}
 			if(attacking == true) {
-				if(spriteNum == 1) {image = attackDown;}
-				if(spriteNum == 2) {image = attackDown;}
+				if(spriteNum == 1) {image = attackDown1;}
+				if(spriteNum == 2) {image = attackDown2;}
 			}
 			break;
 		case "left":
@@ -579,8 +549,8 @@ public class Player extends Entity{
 			}
 			if(attacking == true) {
 				mod_img_left = true;
-				if(spriteNum == 1) {image = attackLeft;}
-				if(spriteNum == 2) {image = attackLeft;}
+				if(spriteNum == 1) {image = attackLeft1;}
+				if(spriteNum == 2) {image = attackLeft2;}
 			}
 			break;
 		case "right":
@@ -591,8 +561,8 @@ public class Player extends Entity{
 				if(spriteNum == 3) {image = right3;}				
 			}
 			if(attacking == true) {
-				if(spriteNum == 1) {image = attackRight;}
-				if(spriteNum == 2) {image = attackRight;}
+				if(spriteNum == 1) {image = attackRight1;}
+				if(spriteNum == 2) {image = attackRight2;}
 			}
 			break;
 		}

@@ -20,7 +20,8 @@ public class MON_Cyclope extends Entity{
 		this.gp = gp;
 		type = type_monster;
 		name = "Cyclope";
-		speed = 8;
+		defaultSpeed = 8;
+		speed = defaultSpeed;
 		maxLife = 5;
 		life = maxLife;
 		attack = 3;
@@ -57,34 +58,30 @@ public class MON_Cyclope extends Entity{
 		
 
 	}
+	
+
 
 	public void setAction() {
-		actionLockCounter++;
 		
-		if(actionLockCounter == 50) {
-			Random random = new Random();
-			int i = random.nextInt(100)+1;
+		if(onPath == true) {
+			//Stop chase
+			checkStopChasingOrNot(gp.player, 10, 100);
 			
-			if(i <= 25) {
-				direction = "up";
-			}
-			if(i > 25 && i <= 50) {
-				direction = "down";
-			}
-			if(i > 50 && i <= 75) {
-				direction = "left";
-			}
-			if(i > 75 && i <= 100) {
-				direction = "right";
-			}
+			// Search direction
+			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
+		}
+		else {	
+			// Start chase
+//			checkStartChasingOrNot(gp.player, 5, 100);
 			
-			actionLockCounter = 0;
+			getRandomDirection();
 		}
 	}
 	
 	public void damageReaction() {
 		actionLockCounter = 0;
 		direction = gp.player.direction;
+//		onPath = true;
 	}
 	public void checkDrop() {
 		int i = new Random().nextInt(100)+1;

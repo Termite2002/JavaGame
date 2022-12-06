@@ -17,7 +17,7 @@ public class NPC_Master extends Entity{
 		
 		name = "master";
 		direction = "down";
-		speed = 1;
+		speed = 2;
 		
 		solidArea.x = 0;
 		solidArea.y = 16;
@@ -72,53 +72,73 @@ public class NPC_Master extends Entity{
 		dialogues[2] = "Con không nhớ gì sao?";
 		dialogues[3] = "Chuyện dài lắm, ta không biết phải bắt đầu từ đâu nữa. Chúng ta đang\nchạy trốn khỏi kẻ thù nhưng " + 
 				"không may thuyền gặp phải cơn bão dữ.\nMay mắn chúng ta đã dạt vào hòn đảo này.";
-		dialogues[4] = "Điều đáng buồn là em gái con đã mất" + " tích khi thuyền"
+		dialogues[4] = "Điều đáng buồn là em gái con đã mất" + " tích khi thuyền "
 				+ "ta bị sóng\ncuốn trôi!";
 		dialogues[5] = "Ta xin lỗi vì đã không bảo vệ được hai đứa.";
 		dialogues[6] = "Bây giờ con hãy nghỉ ngơi đi! Chúng ta sẽ bàn bạc chuyện cần làm\nkhi con khỏe trở lại.";
-		dialogues[7] = "Đi đến cửa căn lều bên cạnh chúng ta đây sẽ giúp\ncon nghỉ ngơi";
+		dialogues[7] = "Đi đến cửa căn lều bên cạnh chúng ta đây sẽ giúp con nghỉ ngơi.";
+		dialogues[8] = "Con đã nghỉ ngơi xong rồi chứ. Mỗi khi con nghỉ trong lều, quái vật\nsẽ hồi sinh trở lại.";
+		dialogues[9] = "Bây giờ trên hòn đảo này chỉ có ba người: ta, con và ông thương gia.";
+		dialogues[10] = "Trong lúc con bất tỉnh chúng ta đã sửa xong thuyền rồi! Tuy nhiên,\nkhông thể khởi hành vì lũ quái vật quá đông."
+				+ "Ta đã phát hiện ra\nrằng hòn đảo này đang sử dụng một vòng sức mạnh bao quanh hòn\nđảo này! Nguồn năng lượng này phát ra"
+				+ " từ hầm ngục phía Bắc.";
+		dialogues[11] = "Ta hi vọng con sẽ xuống đó và phong ấn nguồn năng lượng đó lại.\nRồi chúng ta sẽ lên tàu và thoát khỏi đây.\nSẽ rất nguy hiểm cho con, nhưng ta đã quá già để chiến đấu rồi.";
+		dialogues[12] = "Ta khuyên con nên luyện sức mạnh từ từ và xem những món trang\nbị của ông thương gia trước khi xuống hầm ngục.";
+		dialogues[13] = "Ấn H để xem bản hướng dẫn ta đã viết cho con.";
+		dialogues[14] = "Chúc con may mắn!!!";
 	}
 	
 	public void setAction() {
 		
-		actionLockCounter++;
-		
-		if(actionLockCounter == 100) {
-//			Random random = new Random();
-//			int i = random.nextInt(100)+1;
+		if(onPath == true) {
 			
-//			if(i <= 25) {
-//				direction = "up";
-//			}
-//			if(i > 25 && i <= 50) {
-//				direction = "down";
-//			}
-//			if(i > 50 && i <= 75) {
-//				direction = "left";
-//			}
-//			if(i > 75 && i <= 100) {
-//				direction = "right";
-//			}
-//			
-			if(direction == "down") {
-				direction = "left";
-			}
-			else if(direction == "left") {
-				direction = "up";
-			}
-			else if(direction == "up") {
-				direction = "right";
-			}
-			else if(direction == "right") {
-				direction = "down";
-			}
-			actionLockCounter = 0;
+			int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.titleSize;
+			int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.titleSize;
+			
+			searchPath(goalCol, goalRow);
 		}
+		else {
+			actionLockCounter++;
+			
+			if(actionLockCounter == 100) {
+//				Random random = new Random();
+//				int i = random.nextInt(100)+1;
+				
+//				if(i <= 25) {
+//					direction = "up";
+//				}
+//				if(i > 25 && i <= 50) {
+//					direction = "down";
+//				}
+//				if(i > 50 && i <= 75) {
+//					direction = "left";
+//				}
+//				if(i > 75 && i <= 100) {
+//					direction = "right";
+//				}
+//				
+				if(direction == "down") {
+					direction = "left";
+				}
+				else if(direction == "left") {
+					direction = "up";
+				}
+				else if(direction == "up") {
+					direction = "right";
+				}
+				else if(direction == "right") {
+					direction = "down";
+				}
+				actionLockCounter = 0;
+			}
+		}
+
 	}
 	public void speak() {
 		
 		// Do some special
 		
 		super.speak();
+		onPath = true;
 	}
 }

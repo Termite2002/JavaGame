@@ -1,5 +1,6 @@
 package tile;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -20,6 +21,7 @@ public class TileManager {
 	public int mapTileNum[][][];
 	ArrayList<String> fileNames = new  ArrayList<>();
 	ArrayList<String> collisionStatus = new  ArrayList<>();
+	boolean drawPath = false;
 	
 	public TileManager(GamePanel gp) {
 		
@@ -183,6 +185,17 @@ public class TileManager {
 
 
 
+			}
+		}
+		if(drawPath == true) {
+			g2.setColor(new Color(255, 0 , 0, 70));
+			
+			for(int i = 0; i < gp.pFinder.pathList.size(); i++) {
+				int worldX = gp.pFinder.pathList.get(i).col * gp.titleSize;	
+				int worldY = gp.pFinder.pathList.get(i).row * gp.titleSize;
+				int screenX = worldX - gp.player.worldX + gp.player.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.screenY;
+				g2.fillRect(screenX, screenY, gp.titleSize, gp.titleSize);
 			}
 		}
 	}

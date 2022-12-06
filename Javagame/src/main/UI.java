@@ -142,6 +142,10 @@ public class UI {
 		if(gp.gameState == gp.tradeState) {
 			drawTradeScreen();
 		}
+		// END STATE
+		if(gp.gameState == gp.endState) {
+			endScreen();
+		}
 		
 //		g2.setFont(new Font("Arial", Font.PLAIN, 40));
 //		g2.setColor(Color.white);
@@ -542,29 +546,48 @@ public class UI {
 	
 	public void drawInstruction() {
 		
+
+		
 		// FRAME
 		int x = gp.titleSize*2;
 		int y = gp.titleSize;
-		int width = gp.titleSize * 16;
+		int width = gp.titleSize * 18;
 		int height = gp.titleSize * 11;
 		drawSubWindow(x, y, width, height);
 		
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		
+		String text = "Hướng dẫn";
+		int X = getXforCenterText(text);
+		int Y = y + gp.titleSize;
+		g2.drawString(text, X - 2*gp.titleSize, Y+10);
+		
 		
 		// TEXT
-		g2.setColor(Color.white);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
 		
 		int textX = x + 20;
-		int textY = y + gp.titleSize;
+		int textY = y + gp.titleSize*2;
 		final int lineHeight = 40;
 		
 		g2.drawString("+ Sử dụng W,A,S,D để di chuyển", textX, textY);
 		textY += lineHeight;
 		g2.drawString("+ Phím Enter để tương tác, nói chuyện, tấn công", textX, textY);
 		textY += lineHeight;
-		g2.drawString("+ Ấn phím C để mở bảng trạng thái nhân vật", textX, textY);
+		g2.drawString("+ Ấn phím C để mở bảng trạng thái nhân vật và túi đồ", textX, textY);
+		textY += lineHeight;
+		g2.drawString("+ Ấn phím O để mở Option", textX, textY);
 		textY += lineHeight;
 		g2.drawString("+ Ấn phím ESC để pause game", textX, textY);
+		textY += lineHeight;
+		g2.drawString("* Sát thương gây ra = sức mạnh của bạn + chỉ số vũ khí *", textX, textY);
+		textY += lineHeight;
+		g2.drawString("* Phòng thủ = chỉ số của bạn + chỉ số khiên *", textX, textY);
+		textY += lineHeight;
+		g2.drawString("* Đánh quái để cày cấp, có tiền mua trang bị và vật phẩm *", textX, textY);
+		textY += lineHeight;
+		g2.drawString("* Khi có đồ mạnh, nhớ trang bị để sử dụng!!! *", textX, textY);
 		textY += lineHeight;
 	}
 	public int getItemIndexOnSlot(int slotCol, int slotRow) {
@@ -945,5 +968,53 @@ public class UI {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		int x = tailX - length;
 		return x;
+	}
+	public void endScreen() {
+		
+		// FRAME
+		int x = gp.titleSize*2-20;
+		int y = gp.titleSize;
+		int width = gp.titleSize * 22;
+		int height = gp.titleSize * 12;
+		drawSubWindow(x, y, width, height);
+		
+		g2.setColor(Color.white);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		
+		String text = "Thành công thoát khỏi hòn đảo";
+		int X = getXforCenterText(text);
+		int Y = y + gp.titleSize;
+		g2.drawString(text, X - gp.titleSize, Y+10);
+		
+		
+		// TEXT
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+		
+		int textX = x + 20;
+		int textY = y + gp.titleSize*2;
+		final int lineHeight = 40;
+		
+		textY += 60;
+		g2.drawString("Đội ngũ thực hiện:", textX+gp.titleSize*3, textY);
+		textY += lineHeight;
+		g2.drawString("* LEAD: Phạm Bình Nguyên", textX+30+gp.titleSize*4, textY);
+		textY += lineHeight;
+		g2.drawString("* Nguyễn Sỹ Hội", textX+30+gp.titleSize*4, textY);
+		textY += lineHeight;
+		g2.drawString("* Nguyễn Văn Đỗ Phi", textX+30+gp.titleSize*4, textY);
+		textY += lineHeight;
+		g2.drawString("* Trần Minh Quang", textX+30+gp.titleSize*4, textY);
+		textY += lineHeight + gp.titleSize;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+		g2.drawString("Một quá trình phát triển sóng gió nhưng học được nhiều điều!!!", textX+20, textY);
+		textY += lineHeight;
+		g2.drawString("Tuy còn chưa hoàn thiện nhưng hi vọng trải nghiệm của bạn vui vẻ!", textX+20, textY);
+		textY += lineHeight;
+		g2.drawString("Cảm ơn bạn đã hoàn thành trò chơi của chúng tôi!", textX+20, textY);
+		textY += lineHeight;
+		g2.drawString("Dành tặng lời cảm ơn đến thầy cô, bạn bè và người thân!!!", textX+20, textY);
+		textY += lineHeight;
+
 	}
 }

@@ -11,7 +11,7 @@ public class Sound {
 	Clip clip;
 	URL soundURL[] = new URL[30];
 	FloatControl fc;
-	int volumeScale = 3;
+	int volumeScale = 1;
 	float volume;
 	
 	public Sound() {
@@ -38,6 +38,7 @@ public class Sound {
 		soundURL[19] = getClass().getResource("/sound/enterdungeon.wav");
 		soundURL[20] = getClass().getResource("/sound/Fight.wav");
 		soundURL[21] = getClass().getResource("/sound/Dungeon.wav");
+		soundURL[22] = getClass().getResource("/sound/End_theme.wav");
 	}
 	
 	public void setFile(int i) {

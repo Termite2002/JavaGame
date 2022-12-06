@@ -59,6 +59,8 @@ public class EventHandler {
 			else if(hit(1,33,48,"down") == true) {teleport(0,8,5);}
 			else if(hit(0,20,38,"up") == true) {teleport1(0,20,36);}
 			else if(hit(0,20,36,"down") == true) {teleport1(0,20,38);}
+			else if(hit(0,47,29, "any") == true || hit(0,46,29, "any") == true) {endGame(gp.endState);}
+			else if(hit(1,25,2,"up") == true) {activateEnd(gp.dialogueState);}
 		}
 	}
 	public boolean hit(int map, int col, int row, String reqDirection) {
@@ -89,7 +91,26 @@ public class EventHandler {
 		
 		return hit;
 	}
-	
+	public void activateEnd(int gameState) {
+		if(gp.keyH.enterPressed == true) {
+			gp.active = true;
+			gp.gameState = gp.dialogueState;
+			gp.ui.currentDialogue = "Hòn đảo rung lắc dữ dội, dường như bạn đã giải phóng một nguồn năng \nlượng. Đã đến lúc rời hòn đảo này rồi!";
+		}
+	}
+	public void endGame(int gameState) {
+		if(gp.keyH.enterPressed == true) {
+			if(gp.active == true) {
+				gp.stopMusic();
+				gp.playMusic(22);
+				gp.gameState = gameState;
+			}
+			else {
+				gp.gameState = gp.dialogueState;
+				gp.ui.currentDialogue = "Bạn chưa phong ấn nguồn năng lượng, chưa thể khởi hành!";
+			}
+		}
+	}
 	public void damagePit(int gameState) {
 		
 		gp.gameState = gameState;

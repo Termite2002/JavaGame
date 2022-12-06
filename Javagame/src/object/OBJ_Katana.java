@@ -19,6 +19,7 @@ public class OBJ_Katana extends Entity{
 		attackArea.width = 40;
 		attackArea.height = 40;
 		price = 60;
+		knockBackPower = 10;
 		description = "[" + name + "]\nMột thanh katana sắc bén";
 	}
 

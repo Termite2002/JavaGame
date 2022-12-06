@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import javax.swing.JPanel;
 
+import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import object.SuperObject;
@@ -45,11 +46,12 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     Graphics2D g2;
     
     public boolean appearAvatar = false;
+    public boolean active = false;
     // FPS
     int FPS = 50;
     
     // SYSTEM
-    TileManager tileM = new TileManager(this);										
+    public TileManager tileM = new TileManager(this);										
     public KeyHandler keyH = new KeyHandler(this);
     public UtilityTool uT = new UtilityTool();
     Sound music = new Sound();
@@ -58,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this, appearAvatar);
     public EventHandler eHandler = new EventHandler(this);
+    public PathFinder pFinder = new PathFinder(this);
     Thread gameThread;
     
     // ENTITY AND OBJECT
@@ -80,6 +83,7 @@ public class GamePanel extends JPanel implements Runnable {						// kế thừa 
     public final int gameOverState = 7;
     public final int transitionState = 8;
     public final int tradeState = 9;
+    public final int endState = 10;
     
     // FACESET
     public int face;

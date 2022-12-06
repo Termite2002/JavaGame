@@ -16,6 +16,7 @@ public class OBJ_Sword_Noob extends Entity {
 		attackValue = 1;
 		attackArea.width = 36;
 		attackArea.height = 36;
+		knockBackPower = 1;
 		description = "[" + name + "]\nMột thanh kiếm cũ đã sứt\nmẻ của sư phụ truyền lại";
 	}
 	
