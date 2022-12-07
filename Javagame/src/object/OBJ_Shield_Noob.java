@@ -14,6 +14,7 @@ public class OBJ_Shield_Noob extends Entity {
 		down1 = setup("/objects/shield_01a");
 		down1 = UtilityTool.scaleImage(down1, gp.titleSize, gp.titleSize);
 		defenseValue = 1;
+		price = 10;
 		description = "[" + name + "]\nMột cái khiên gỗ được\nlàm từ thân cây sưa đỏ";
 	}
 

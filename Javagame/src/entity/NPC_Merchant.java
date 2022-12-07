@@ -2,9 +2,18 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_BigPotion;
+import object.OBJ_BlueShield;
+import object.OBJ_BlueSword;
+import object.OBJ_GoldShiled;
+import object.OBJ_GoldSword;
+import object.OBJ_HellShield;
+import object.OBJ_HellSword;
 import object.OBJ_IronShield;
 import object.OBJ_Katana;
 import object.OBJ_Key;
+import object.OBJ_MediumPotion;
+import object.OBJ_SmallPotion;
 import object.OBJ_Sushi;
 
 public class NPC_Merchant extends Entity{
@@ -71,9 +80,17 @@ public class NPC_Merchant extends Entity{
 	}
 	public void setItems() {
 		inventory.add(new OBJ_Sushi(gp));
+		inventory.add(new OBJ_SmallPotion(gp));
+		inventory.add(new OBJ_MediumPotion(gp));
+		inventory.add(new OBJ_BigPotion(gp));
 		inventory.add(new OBJ_IronShield(gp));
 		inventory.add(new OBJ_Katana(gp));
-		inventory.add(new OBJ_Key(gp));
+		inventory.add(new OBJ_BlueShield(gp));
+		inventory.add(new OBJ_BlueSword(gp));
+		inventory.add(new OBJ_GoldShiled(gp));
+		inventory.add(new OBJ_GoldSword(gp));
+		inventory.add(new OBJ_HellShield(gp));
+		inventory.add(new OBJ_HellSword(gp));
 	}
 	public void speak() {
 		super.speak();

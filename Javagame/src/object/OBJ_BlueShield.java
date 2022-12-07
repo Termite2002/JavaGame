@@ -15,7 +15,7 @@ public class OBJ_BlueShield extends Entity {
 		down0 = UtilityTool.scaleImage(down0, gp.titleSize, gp.titleSize);
 		down1 = setup("/objects/shield_01c");
 		down1 = UtilityTool.scaleImage(down1, gp.titleSize, gp.titleSize);
-		defenseValue = 4;
+		defenseValue = 3;
 		price = 100;
 		description = "[" + name + "]\nMột cái khiên cứng cáp\nmàu xanh ngọc lấp lánh";
 	}

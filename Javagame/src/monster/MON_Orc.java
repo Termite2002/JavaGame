@@ -6,6 +6,8 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Coin;
+import object.OBJ_SmallPotion;
+import object.OBJ_SomeCoin;
 import object.OBJ_Sushi;
 
 public class MON_Orc extends Entity{
@@ -20,10 +22,10 @@ public class MON_Orc extends Entity{
 		name = "Orc";
 		defaultSpeed = 3;
 		speed = defaultSpeed;
-		maxLife = 10;
+		maxLife = 20;
 		life = maxLife;
-		attack = 6;
-		defense = 3;
+		attack = 8;
+		defense = 4;
 		exp = 9;
 		
 		solidArea.x = 4;
@@ -125,12 +127,12 @@ public class MON_Orc extends Entity{
 		int i = new Random().nextInt(100)+1;
 		
 		if(i < 25) {
-			dropItem(new OBJ_Coin(gp));
+			dropItem(new OBJ_SomeCoin(gp));
 		}
-		if(i >= 25 && i < 50) {
-			dropItem(new OBJ_Sushi(gp));
+		if(i >= 25 && i < 35) {
+			dropItem(new OBJ_SmallPotion(gp));
 		}
-		if(i >= 50 && i < 100) {
+		if(i >= 35 && i < 100) {
 			// later
 		}
 	}

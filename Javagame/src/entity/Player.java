@@ -81,15 +81,27 @@ public class Player extends Entity{
 		
 	}
 	public void setDefaultPositions() {
-		worldX = 6*gp.titleSize;
-		worldY = 44*gp.titleSize;
-		direction = "down";
+		if(gp.currentMap == 0) {
+			worldX = 6*gp.titleSize;
+			worldY = 44*gp.titleSize;
+			direction = "down";
+		}
+		else {
+			gp.currentMap = 0;
+			worldX = 6*gp.titleSize;
+			worldY = 44*gp.titleSize;
+			direction = "down";
+		}
 	}
 	public void restoreLifeandMana() {
 		life = maxLife;
 		invinsible = false;
 		speed = defaultSpeed;
 		attacking = false;
+		gp.player.coin -= 30;
+		if(gp.player.coin < 0) {
+			gp.player.coin = 0;
+		}
 	}
 	public void setItems() {
 		
@@ -287,6 +299,18 @@ public class Player extends Entity{
 						gp.playSE(1);
 						text = "Nhặt được " + gp.obj[gp.currentMap][i].name;
 						break;
+					case "Lọ máu nhỏ":
+						gp.playSE(1);
+						text = "Nhặt được " + gp.obj[gp.currentMap][i].name;
+						break;
+					case "Lọ máu vừa":
+						gp.playSE(1);
+						text = "Nhặt được " + gp.obj[gp.currentMap][i].name;
+						break;
+					case "Lọ máu lớn":
+						gp.playSE(1);
+						text = "Nhặt được " + gp.obj[gp.currentMap][i].name;
+						break;
 					}
 				}
 				else {
@@ -446,11 +470,15 @@ public class Player extends Entity{
 		if(itemIndex < inventory.size()) {
 			Entity selectedItem = inventory.get(itemIndex);
 			
-			if(selectedItem.type == type_sw_noob || selectedItem.type == type_katana) {
+			if(selectedItem.type == type_sw_noob || selectedItem.type == type_katana 
+					|| selectedItem.type == type_bluesword || selectedItem.type == type_goldsword
+					|| selectedItem.type == type_hellsword) {
 				currentWeapon = selectedItem;
 				attack = getAttack();
 			}
-			if(selectedItem.type == type_woodenshield || selectedItem.type == type_ironshield || selectedItem.type == type_blueshield) {
+			if(selectedItem.type == type_woodenshield || selectedItem.type == type_ironshield 
+					|| selectedItem.type == type_blueshield || selectedItem.type == type_goldshield
+					|| selectedItem.type == type_hellshield) {
 				currentShield = selectedItem;
 				defense = getDefense();
 			}

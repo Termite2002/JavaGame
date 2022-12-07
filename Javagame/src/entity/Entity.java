@@ -94,6 +94,11 @@ public class Entity {
 	public final int type_pickupOnly = 8;
 	public final int type_obstacle = 9;
 	public final int type_blueshield = 10;
+	public final int type_bluesword = 11;
+	public final int type_goldsword = 12;
+	public final int type_hellsword = 13;
+	public final int type_goldshield = 14;
+	public final int type_hellshield = 14;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;

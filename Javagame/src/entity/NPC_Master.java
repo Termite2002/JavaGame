@@ -139,6 +139,6 @@ public class NPC_Master extends Entity{
 		// Do some special
 		
 		super.speak();
-		onPath = true;
+//		onPath = true;
 	}
 }

@@ -6,6 +6,7 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Coin;
+import object.OBJ_SomeCoin;
 import object.OBJ_Sushi;
 
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class MON_Cyclope extends Entity{
 		name = "Cyclope";
 		defaultSpeed = 8;
 		speed = defaultSpeed;
-		maxLife = 5;
+		maxLife = 12;
 		life = maxLife;
 		attack = 3;
 		defense = 0;
@@ -92,8 +93,8 @@ public class MON_Cyclope extends Entity{
 		if(i >= 25 && i < 50) {
 			dropItem(new OBJ_Sushi(gp));
 		}
-		if(i >= 50 && i < 100) {
-			// later
+		if(i >= 50 && i < 60) {
+			dropItem(new OBJ_SomeCoin(gp));
 		}
 	}
 }
