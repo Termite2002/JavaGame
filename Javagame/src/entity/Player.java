@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_GodSword;
 import object.OBJ_Katana;
 import object.OBJ_Key;
 import object.OBJ_Kunai;
@@ -43,7 +44,7 @@ public class Player extends Entity{
 		screenX = gp.screenWidth/2 - (gp.titleSize/2);
 		screenY = gp.screenHeight/2 - (gp.titleSize/2);
 		
-		solidArea = new Rectangle(8, 16, 32, 32);
+		solidArea = new Rectangle(8, 12, 36, 36);
 		
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
@@ -68,7 +69,7 @@ public class Player extends Entity{
 		level = 1;
 		maxLife = 12;
 		life = maxLife;
-		coin = 200;
+		coin = 0;
 		projectile = new OBJ_Kunai(gp);
 		strength = 1;
 		dexterity = 1;
@@ -108,6 +109,7 @@ public class Player extends Entity{
 		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
+		inventory.add(new OBJ_GodSword(gp));
 
 	}
 	public int getAttack() {
@@ -472,13 +474,13 @@ public class Player extends Entity{
 			
 			if(selectedItem.type == type_sw_noob || selectedItem.type == type_katana 
 					|| selectedItem.type == type_bluesword || selectedItem.type == type_goldsword
-					|| selectedItem.type == type_hellsword) {
+					|| selectedItem.type == type_hellsword || selectedItem.type == type_godsword) {
 				currentWeapon = selectedItem;
 				attack = getAttack();
 			}
 			if(selectedItem.type == type_woodenshield || selectedItem.type == type_ironshield 
 					|| selectedItem.type == type_blueshield || selectedItem.type == type_goldshield
-					|| selectedItem.type == type_hellshield) {
+					|| selectedItem.type == type_hellshield || selectedItem.type == type_godshield) {
 				currentShield = selectedItem;
 				defense = getDefense();
 			}
@@ -628,6 +630,9 @@ public class Player extends Entity{
 		
 		// Reset alpha
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		
+
+		
 		
 		// Debug
 //		g2.setFont(new Font("Arial", Font.PLAIN, 26));

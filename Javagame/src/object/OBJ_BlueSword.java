@@ -16,8 +16,8 @@ public class OBJ_BlueSword extends Entity{
 		down1 = setup("/objects/sword_01c");
 		down1 = UtilityTool.scaleImage(down1, gp.titleSize, gp.titleSize);
 		attackValue = 3;
-		attackArea.width = 42;
-		attackArea.height = 42;
+		attackArea.width = 36;
+		attackArea.height = 36;
 		price = 100;
 		knockBackPower = 7;
 		description = "[" + name + "]\nThanh kiếm được khảm\nngọc xanh";

@@ -24,7 +24,7 @@ public class MON_Beast extends Entity{
 		life = maxLife;
 		attack = 3;
 		defense = 6;
-		exp = 4;
+		exp = 20;
 		
 		solidArea.x = 0;
 		solidArea.y = 16;
@@ -66,7 +66,7 @@ public class MON_Beast extends Entity{
 		}
 		else {	
 			// Start chase
-			checkStartChasingOrNot(gp.player, 10, 100);
+			checkStartChasingOrNot(gp.player, 6, 100);
 			
 			getRandomDirection();
 		}

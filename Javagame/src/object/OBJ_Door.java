@@ -30,6 +30,6 @@ public class OBJ_Door extends Entity{
 	public void interact() {
 		
 		gp.gameState = gp.dialogueState;
-		gp.ui.currentDialogue = "Bạn cần chìa khóa để mở";
+		gp.ui.currentDialogue = "Bạn cần chìa khóa để mở. Có lẽ chìa khóa chỉ đâu\nđó trong hầm ngục này thôi!";
 	}
 }

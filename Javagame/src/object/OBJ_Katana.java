@@ -16,8 +16,8 @@ public class OBJ_Katana extends Entity{
 		down1 = setup("/objects/Katana");
 		down1 = UtilityTool.scaleImage(down1, 18, 42);
 		attackValue = 2;
-		attackArea.width = 40;
-		attackArea.height = 40;
+		attackArea.width = 36;
+		attackArea.height = 36;
 		price = 60;
 		knockBackPower = 5;
 		description = "[" + name + "]\nMột thanh katana sắc bén";

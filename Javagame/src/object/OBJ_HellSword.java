@@ -14,8 +14,8 @@ public class OBJ_HellSword extends Entity{
 		down1 = setup("/objects/sword_01e");
 		down1 = UtilityTool.scaleImage(down1, gp.titleSize, gp.titleSize);
 		attackValue = 7;
-		attackArea.width = 46;
-		attackArea.height = 46;
+		attackArea.width = 36;
+		attackArea.height = 36;
 		knockBackPower = 11;
 		price = 299;
 		description = "[" + name + "]\nThanh kiếm của quỷ vương\ndưới địa ngục";

@@ -98,7 +98,9 @@ public class Entity {
 	public final int type_goldsword = 12;
 	public final int type_hellsword = 13;
 	public final int type_goldshield = 14;
-	public final int type_hellshield = 14;
+	public final int type_hellshield = 15;
+	public final int type_godshield = 16;
+	public final int type_godsword = 17;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -405,7 +407,7 @@ public class Entity {
 	}
 	public void damagePlayer(int attack) {
 		if(gp.player.invinsible == false) {
-			gp.playSE(7);
+			gp.playSE(24);
 			int damage = attack - gp.player.defense;
 			if(damage < 0) {
 				damage = 0;
