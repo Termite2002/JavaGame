@@ -18,7 +18,7 @@ public class MON_Beast extends Entity{
 		this.gp = gp;
 		type = type_monster;
 		name = "Beast";
-		defaultSpeed = 4;
+		defaultSpeed = 5;
 		speed = defaultSpeed;
 		maxLife = 49;
 		life = maxLife;

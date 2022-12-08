@@ -90,10 +90,10 @@ public class MON_Cyclope extends Entity{
 		if(i < 25) {
 			dropItem(new OBJ_Coin(gp));
 		}
-		if(i >= 25 && i < 50) {
+		if(i >= 25 && i < 70) {
 			dropItem(new OBJ_Sushi(gp));
 		}
-		if(i >= 50 && i < 60) {
+		if(i >= 70 && i < 100) {
 			dropItem(new OBJ_SomeCoin(gp));
 		}
 	}

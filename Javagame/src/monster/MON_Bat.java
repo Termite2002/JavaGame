@@ -7,6 +7,7 @@ import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Coin;
 import object.OBJ_LotCoin;
+import object.OBJ_MediumPotion;
 import object.OBJ_SomeCoin;
 import object.OBJ_Sushi;
 
@@ -20,11 +21,11 @@ public class MON_Bat extends Entity{
 		name = "Bat";
 		defaultSpeed = 9;
 		speed = defaultSpeed;
-		maxLife = 8;
+		maxLife = 10;
 		life = maxLife;
 		attack = 7;
-		defense = 4;
-		exp = 7;
+		defense = 15;
+		exp = 4;
 		
 		solidArea.x = 3;
 		solidArea.y = 15;
@@ -97,6 +98,9 @@ public class MON_Bat extends Entity{
 		}
 		if(i >= 50 && i < 90) {
 			dropItem(new OBJ_LotCoin(gp));
+		}
+		if(i >= 90 && i < 100) {
+			dropItem(new OBJ_MediumPotion(gp));
 		}
 	}
 }

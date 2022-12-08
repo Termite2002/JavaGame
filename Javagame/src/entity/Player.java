@@ -63,6 +63,7 @@ public class Player extends Entity{
 		worldY = 44*gp.titleSize;
 		defaultSpeed = 4;
 		speed = defaultSpeed;
+		currentSpeed = defaultSpeed;
 		direction = "down";
 		
 		// PLAYER STATUS
@@ -74,7 +75,7 @@ public class Player extends Entity{
 		strength = 1;
 		dexterity = 1;
 		exp = 0;
-		nextLevelExp = 5;
+		nextLevelExp = 8;
 		currentWeapon = new OBJ_Sword_Noob(gp);
 		currentShield = new OBJ_Shield_Noob(gp);
 		attack = getAttack();
@@ -97,7 +98,7 @@ public class Player extends Entity{
 	public void restoreLifeandMana() {
 		life = maxLife;
 		invinsible = false;
-		speed = defaultSpeed;
+		speed = currentSpeed;
 		attacking = false;
 		gp.player.coin -= 30;
 		if(gp.player.coin < 0) {
@@ -109,7 +110,7 @@ public class Player extends Entity{
 		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
-		inventory.add(new OBJ_GodSword(gp));
+//		inventory.add(new OBJ_GodSword(gp));
 
 	}
 	public int getAttack() {
@@ -441,18 +442,19 @@ public class Player extends Entity{
 	public void checkLevelUp() {
 		if(exp >= nextLevelExp) {
 			level++;
-			if(level > 5) {
-				nextLevelExp += nextLevelExp/2;
+			if(level >= 5) {
+				nextLevelExp = nextLevelExp*2;
 			}
 			else {
-				nextLevelExp = nextLevelExp*2;
+				nextLevelExp = nextLevelExp*3;
 			}
 			if(maxLife > life) {
 				life += (maxLife - life);
 			}
-			if(level == 3 || level == 7) {
-				speed++;
+			if(level == 6 || level == 9) {
+				currentSpeed++;
 			}
+			speed = currentSpeed;
 			strength++;
 			dexterity++;
 			attack = getAttack();
