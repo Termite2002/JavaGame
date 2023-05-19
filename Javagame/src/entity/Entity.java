@@ -679,20 +679,23 @@ public class Entity {
 	public void searchPath(int goalCol, int goalRow) {
 		
 		int startCol = (worldX + solidArea.x)/gp.titleSize;
-		int startRow = (worldY + solidArea.y)/gp.titleSize;;
+		int startRow = (worldY + solidArea.y)/gp.titleSize;
 		
-		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 		
 		if(gp.pFinder.search() == true) {
 			// Next 
 			int nextX = gp.pFinder.pathList.get(0).col * gp.titleSize;
 			int nextY = gp.pFinder.pathList.get(0).row * gp.titleSize;
 			
+			
+			//  move action
 			int enLeftX = worldX + solidArea.x;
 			int enRightX = worldX + solidArea.x + solidArea.width;
 			int enTopY = worldY + solidArea.y;
 			int enBottomY = worldY + solidArea.y + solidArea.height;
 			
+			// Check position to choose direction
 			if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.titleSize) {
 				direction = "up";
 			}
@@ -707,6 +710,7 @@ public class Entity {
 					direction = "right";
 				}
 			}
+			// Check collision
 			else if(enTopY > nextY && enLeftX > nextX) {
 				direction = "up";
 				checkCollision();

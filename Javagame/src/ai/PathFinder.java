@@ -56,8 +56,9 @@ public class PathFinder {
 		goalReached = false;
 		step = 0;
 	}
-	public void setNodes(int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
+	public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
 		
+		// RESET
 		resetNodes();
 		
 		startNode = node[startCol][startRow];
@@ -142,6 +143,8 @@ public class PathFinder {
 					}
 				}
 			}
+			
+			
 			if(openList.size() == 0) {
 				break;
 			}

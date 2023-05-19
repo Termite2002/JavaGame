@@ -62,7 +62,7 @@ public class Player extends Entity{
 		worldX = 5*gp.titleSize;
 		worldY = 44*gp.titleSize;
 		defaultSpeed = 4;
-		speed = defaultSpeed;
+		speed = 9;
 		currentSpeed = defaultSpeed;
 		direction = "down";
 		

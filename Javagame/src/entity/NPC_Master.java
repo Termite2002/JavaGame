@@ -67,8 +67,8 @@ public class NPC_Master extends Entity{
 	}
 	
 	public void setDialogue() {
-		dialogues[0] = "Con dậy rồi à? Ta lo cho con quá!!! Ta đã đợi con tỉnh lại suốt mấy tháng\nqua rồi!";
-		dialogues[1] = "Đây là đâu ư?";
+		dialogues[0] = "Con đang thuyết trình btl A* hả? Ta thấy bài thuyết trình của con thật là\nsiêu cấp vip pro!";
+		dialogues[1] = "Chắc chắn được 10 điểm rồi, bảo cô giáo con thế nhé";
 		dialogues[2] = "Con không nhớ gì sao?";
 		dialogues[3] = "Chuyện dài lắm, ta không biết phải bắt đầu từ đâu nữa. Chúng ta đang\nchạy trốn khỏi kẻ thù nhưng " + 
 				"không may thuyền gặp phải cơn bão dữ.\nMay mắn chúng ta đã dạt vào hòn đảo này.";
@@ -139,6 +139,11 @@ public class NPC_Master extends Entity{
 		// Do some special
 		
 		super.speak();
-//		onPath = true;
+		if (onPath == false) {
+			onPath = true;
+		}
+		else {
+			onPath = false;
+		}
 	}
 }
